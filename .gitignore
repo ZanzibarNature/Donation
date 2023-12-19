@@ -396,3 +396,6 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Do not push over test environment variables, which include secrets also precent in the GitHub organisation
+appsettings.*
