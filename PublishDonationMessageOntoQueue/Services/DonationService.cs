@@ -1,8 +1,8 @@
-﻿using Domain;
-using Domain.DTO;
-using Service.Interfaces;
+﻿using PublishDonationMessageOntoQueue.Domain;
+using PublishDonationMessageOntoQueue.Domain.DTO;
+using PublishDonationMessageOntoQueue.Services.Interfaces;
 
-namespace Service
+namespace PublishDonationMessageOntoQueue.Services
 {
     public class DonationService : IDonationService
     {

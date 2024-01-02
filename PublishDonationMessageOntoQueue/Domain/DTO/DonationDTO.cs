@@ -1,4 +1,4 @@
-﻿namespace Domain.DTO
+﻿namespace PublishDonationMessageOntoQueue.Domain.DTO
 {
     public class DonationDTO
     {
