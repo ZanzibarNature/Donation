@@ -5,6 +5,6 @@
         int Id { get; set; }
         int UserId { get; set; }
         double Amount { get; set; }
-        int ProjectId { get; set; }
+        int ArticleId { get; set; }
     }
 }
