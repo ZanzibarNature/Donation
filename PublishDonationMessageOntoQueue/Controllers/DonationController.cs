@@ -1,7 +1,8 @@
-﻿using Domain.DTO;
+﻿using PublishDonationMessageOntoQueue.Domain.DTO;
 using Microsoft.AspNetCore.Mvc;
 using PublishDonationMessageOntoQueue.Controllers.Interfaces;
-using Service.Interfaces;
+using PublishDonationMessageOntoQueue.Services.Interfaces;
+using PublishDonationMessageOntoQueue.Services;
 
 namespace PublishDonationMessageOntoQueue.Controllers
 {

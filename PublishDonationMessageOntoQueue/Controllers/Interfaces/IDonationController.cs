@@ -1,4 +1,4 @@
-﻿using Domain.DTO;
+﻿using PublishDonationMessageOntoQueue.Domain.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PublishDonationMessageOntoQueue.Controllers.Interfaces
