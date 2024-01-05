@@ -18,7 +18,7 @@ jobs:
 
       - name: Build
         run: dotnet build --no-restore
-        working-directory: ./Donation
+        working-directory: .
 
       - name: Run tests
         run: dotnet test --no-build --verbosity normal
@@ -38,7 +38,7 @@ jobs:
 
       - name: Build
         run: dotnet build --no-restore
-        working-directory: ./Donation
+        working-directory: .
 
       - name: Run tests
         run: dotnet test --no-build --verbosity normal
