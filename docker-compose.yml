@@ -1,0 +1,15 @@
+version: '1.0'
+
+services:
+  donation-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: zanzibarinh/donation-dev:latest
+    container_name: Donation-dev
+  donation-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: zanzibarinh/donation-prod:latest
+    container_name: Donation-prod
