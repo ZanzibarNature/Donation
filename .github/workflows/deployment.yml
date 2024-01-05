@@ -56,7 +56,7 @@ jobs:
         run: pwd
 
       - name: LS
-        run: ls
+        run: ls -a
 
       - name: Build and push
         uses: docker/build-push-action@v5
@@ -86,7 +86,7 @@ jobs:
         run: pwd
 
       - name: LS
-        run: ls
+        run: ls -a
       
       - name: Build and push        
         uses: docker/build-push-action@v5
