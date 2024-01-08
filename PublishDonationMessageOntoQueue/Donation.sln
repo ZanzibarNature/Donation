@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PublishDonationMessageOntoQueue", "PublishDonationMessageOntoQueue\PublishDonationMessageOntoQueue.csproj", "{D3D94FE6-3FC8-4E13-9DC5-FB69D4C12414}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PublishDonationMessageOntoQueue", "PublishDonationMessageOntoQueue.csproj", "{D3D94FE6-3FC8-4E13-9DC5-FB69D4C12414}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
