@@ -1,0 +1,9 @@
+version: '1.0'
+
+services:
+  donation-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: zanzibarinh/donation-prod:latest
+    container_name: Donation-prod

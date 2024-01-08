@@ -1,0 +1,8 @@
+name: docker-compose-prod
+description: A generated Helm Chart for docker-compose-prod from Skippbox Kompose
+version: 0.0.1
+apiVersion: v2
+keywords:
+  - docker-compose-prod
+sources:
+home:
