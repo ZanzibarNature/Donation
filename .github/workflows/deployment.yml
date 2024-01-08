@@ -35,6 +35,32 @@ jobs:
       - name: Build
         run: dotnet build
         working-directory: .
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      
+      - name: PWD
+        run: pwd
+
+      - name: LS
+        run: ls -a
+      
+      - name: Build and push        
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: zanzibarinh/donations-prod:latest
   push-dev-dockerhub:
     runs-on: ubuntu-latest
     needs: build-dev
@@ -67,7 +93,7 @@ jobs:
           tags: zanzibarinh/donations-dev:latest
   push-main-dockerhub:
     runs-on: ubuntu-latest
-    needs: build-main
+    needs: build-dev
 
     steps:
       - name: Set up QEMU
