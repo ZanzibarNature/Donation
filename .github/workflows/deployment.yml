@@ -34,7 +34,7 @@ jobs:
 
       - name: Build
         run: dotnet build --configuration Release
-        working-directory: .
+        working-directory: ./PublishDonationMessageOntoQueue
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
