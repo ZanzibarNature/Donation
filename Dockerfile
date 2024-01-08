@@ -3,7 +3,7 @@ ARG TARGETARCH
 
 COPY . /source
 
-WORKDIR /source/Donation/PublishDonationMessageOntoQueue
+WORKDIR /source/Donation/DonationAPI
 
 # Build the application.
 RUN dotnet publish -o /app
@@ -39,4 +39,4 @@ EXPOSE 8080
 # Run container by default as user with id 1234
 USER appuser
 
-ENTRYPOINT ["dotnet", "UserAPI.dll"]
+ENTRYPOINT ["dotnet", "DonationAPI.dll"]

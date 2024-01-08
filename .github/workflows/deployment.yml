@@ -32,6 +32,12 @@ jobs:
         with:
           dotnet-version: 6.0.x
 
+      - name: PWD
+        run: pwd
+
+      - name: LS
+        run: ls -a
+      
       - name: Restore
         run: dotnet restore
         working-directory: ./Donation
@@ -51,12 +57,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      
-      - name: PWD
-        run: pwd
-
-      - name: LS
-        run: ls -a
       
       - name: Build and push        
         uses: docker/build-push-action@v5
