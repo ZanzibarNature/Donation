@@ -34,11 +34,11 @@ jobs:
 
       - name: Restore
         run: dotnet restore
-        working-directory: ./PublishDonationMessageOntoQueue
+        working-directory: ./Donation
       
       - name: Build
         run: dotnet build --configuration Release --no-restore
-        working-directory: ./PublishDonationMessageOntoQueue
+        working-directory: ./Donation
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
