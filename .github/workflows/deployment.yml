@@ -32,8 +32,12 @@ jobs:
         with:
           dotnet-version: 6.0.x
 
+      - name: Restore
+        run: dotnet restore
+        working-directory: ./PublishDonationMessageOntoQueue
+      
       - name: Build
-        run: dotnet build --configuration Release
+        run: dotnet build --configuration Release --no-restore
         working-directory: ./PublishDonationMessageOntoQueue
 
       - name: Set up QEMU
@@ -57,7 +61,6 @@ jobs:
       - name: Build and push        
         uses: docker/build-push-action@v5
         with:
-          context: ./PublishDonationMessageOntoQueue
           push: true
           platforms: linux/amd64,linux/arm64
           tags: zanzibarinh/donations-prod:latest
