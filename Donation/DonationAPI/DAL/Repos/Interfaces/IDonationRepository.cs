@@ -3,7 +3,7 @@ using Azure.Data.Tables;
 
 namespace DonationAPI.DAL.Repos.Interfaces
 {
-    internal interface IDonationRepository<T> where T : class, ITableEntity, new()
+    public interface IDonationRepository<T> where T : class, ITableEntity, new()
     {
         Task<T> GetDonationByIdAsync(string partitionKey, string rowKey);
         Task<IEnumerable<T>> GetAllDonationsAsync();
