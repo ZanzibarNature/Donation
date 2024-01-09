@@ -1,4 +1,5 @@
-﻿using DonationAPI.Domain;
+﻿using DonationAPI.DAL.Repos.Interfaces;
+using DonationAPI.Domain;
 using DonationAPI.Domain.DTO;
 using DonationAPI.Services.Interfaces;
 
@@ -6,6 +7,13 @@ namespace DonationAPI.Services
 {
     public class DonationService : IDonationService
     {
+        private readonly IDonationRepository<Donation> _donationRepository;
+
+        public DonationService(IDonationRepository<Donation> donationRepository)
+        {
+            _donationRepository = donationRepository;
+        }
+
         public int DeleteDonation(int id)
         {
             throw new NotImplementedException();
