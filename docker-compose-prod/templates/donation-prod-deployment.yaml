@@ -27,10 +27,6 @@ spec:
       containers:
         - image: zanzibarinh/donation-prod:latest
           name: donation-prod
-          ports:
-            - containerPort: 8080
-              hostPort: 80
-              protocol: TCP
           resources: {}
       restartPolicy: Always
 status: {}
