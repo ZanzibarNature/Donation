@@ -3,7 +3,7 @@ using DonationAPI.DAL.Repos;
 using DonationAPI.Services;
 using DonationAPI.Services.Interfaces;
 using DonationAPI.Domain;
-
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +13,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Listen(IPAddress.Any, 8080);
+});
 
 builder.Services.AddScoped<IDonationService, DonationService>();
 builder.Services.AddScoped<IDonationRepository<Donation>, DonationRepository<Donation>>();
