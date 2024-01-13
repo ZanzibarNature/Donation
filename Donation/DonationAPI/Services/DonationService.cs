@@ -1,4 +1,5 @@
-﻿using DonationAPI.DAL.Repos.Interfaces;
+﻿using Azure;
+using DonationAPI.DAL.Repos.Interfaces;
 using DonationAPI.Domain;
 using DonationAPI.Domain.DTO;
 using DonationAPI.Services.Interfaces;
@@ -14,29 +15,50 @@ namespace DonationAPI.Services
             _donationRepository = donationRepository;
         }
 
-        public int DeleteDonation(int id)
+        public async Task<Response> DeleteDonationAsync(string partitionKey, string rowKey)
         {
-            throw new NotImplementedException();
+            return await _donationRepository.DeleteDonationAsync(partitionKey, rowKey);
         }
 
-        public List<Donation> GetAllDonations()
+        public async Task<IList<Donation>> GetAllDonationsAsync()
         {
-            throw new NotImplementedException();
+            return await _donationRepository.GetAllDonationsAsync();
         }
 
-        public Donation GetDonationById(int id)
+        public async Task<Donation> GetDonationByKeyAsync(string partitionKey, string rowKey)
         {
-            throw new NotImplementedException();
+            return await _donationRepository.GetDonationByIdAsync(partitionKey, rowKey);
         }
 
-        public Donation StoreDonation(Donation donation)
+        public async Task<Donation> StoreDonationAsync(DonationDTO donationDTO)
         {
-            throw new NotImplementedException();
+            Donation donation = new Donation
+            {
+                PartitionKey = "Donation",
+                RowKey = Guid.NewGuid().ToString(),
+                Amount = donationDTO.Amount,
+                ArticleId = donationDTO.ArticleId,
+                UserId = donationDTO.UserId
+            };
+
+            await _donationRepository.UpsertDonationAsync(donation);
+            return donation;
         }
 
-        public Donation UpdateDonation(int id, DonationDTO donationDTO)
+        public async Task<Donation> UpdateDonationAsync(DonationDTO donationDTO)
         {
-            throw new NotImplementedException();
+            Donation donation = new Donation
+            {
+                PartitionKey = "Donation",
+                RowKey = Guid.NewGuid().ToString(),
+                ETag = donationDTO.ETag,
+                Amount = donationDTO.Amount,
+                ArticleId = donationDTO.ArticleId,
+                UserId = donationDTO.UserId
+            };
+
+            await _donationRepository.UpsertDonationAsync(donation);
+            return donation;
         }
     }
 }

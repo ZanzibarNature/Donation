@@ -1,14 +1,15 @@
-﻿using DonationAPI.Domain;
+﻿using Azure;
+using DonationAPI.Domain;
 using DonationAPI.Domain.DTO;
 
 namespace DonationAPI.Services.Interfaces
 {
     public interface IDonationService
     {
-        public Donation StoreDonation(Donation donation);
-        public Donation GetDonationById(int id);
-        public List<Donation> GetAllDonations();
-        public Donation UpdateDonation(int id, DonationDTO donationDTO);
-        public int DeleteDonation(int id);
+        public Task<Donation> StoreDonationAsync(DonationDTO donationDTO);
+        public Task<Donation> GetDonationByKeyAsync(string partitionKey, string rowKey);
+        public Task<IList<Donation>> GetAllDonationsAsync();
+        public Task<Donation> UpdateDonationAsync(DonationDTO donationDTO);
+        public Task<Response> DeleteDonationAsync(string partitionKey, string rowKey);
     }
 }

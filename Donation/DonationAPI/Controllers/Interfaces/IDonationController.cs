@@ -5,9 +5,9 @@ namespace DonationAPI.Controllers.Interfaces
 {
     public interface IDonationController
     {
-        public IActionResult StoreDonation([FromBody] DonationDTO donationDTO);
-        public IActionResult GetDonationById(int id);
-        public IActionResult GetAllDonations();
-        public IActionResult DeleteDonation(int id);
+        public Task<IActionResult> StoreDonation([FromBody] DonationDTO donationDTO);
+        public Task<IActionResult> GetDonationByKey(string partitionKey, string rowKey);
+        public Task<IActionResult> GetAllDonations();
+        public Task<IActionResult> DeleteDonation(string partitionKey, string rowKey);
     }
 }

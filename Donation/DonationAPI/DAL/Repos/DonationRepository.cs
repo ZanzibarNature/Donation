@@ -20,7 +20,7 @@ namespace DonationAPI.DAL.Repos
             return await _client.DeleteEntityAsync(partitionKey, rowKey);
         }
 
-        public async Task<IEnumerable<T>> GetAllDonationsAsync()
+        public async Task<IList<T>> GetAllDonationsAsync()
         {
             IList<T> results = new List<T>();
             var donations = _client.QueryAsync<T>(maxPerPage: 25);

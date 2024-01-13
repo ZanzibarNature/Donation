@@ -5,7 +5,6 @@ namespace DonationAPI.Domain
 {
     public class Donation : ITableEntity
     {
-        public int Id { get; set; }
         public int UserId { get; set; }
         public double Amount { get; set; }
         public int ArticleId { get; set; }
