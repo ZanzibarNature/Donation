@@ -8,9 +8,10 @@ namespace DonationAPI.DAL.Repos
     {
         private readonly TableClient _client;
 
-        public DonationRepository()
+        public DonationRepository(IConfiguration config)
         {
-            TableServiceClient tableServiceClient = new TableServiceClient("UseDevelopmentStorage=true");
+            IConfiguration _config = config;
+            TableServiceClient tableServiceClient = new TableServiceClient(Environment.GetEnvironmentVariable("AZURE_CONNECTION") ?? _config["AppStorage"]); ;
             tableServiceClient.CreateTableIfNotExists("donations");
             _client = tableServiceClient.GetTableClient("donations");
         }

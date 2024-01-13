@@ -15,6 +15,21 @@ namespace DonationAPI.Services
             _donationRepository = donationRepository;
         }
 
+        public async Task<Donation> CreateDonationAsync(DonationDTO donationDTO)
+        {
+            Donation donation = new Donation
+            {
+                PartitionKey = "Donation",
+                RowKey = Guid.NewGuid().ToString(),
+                Amount = donationDTO.Amount,
+                ArticleId = donationDTO.ArticleId,
+                UserId = donationDTO.UserId
+            };
+
+            await _donationRepository.UpsertDonationAsync(donation);
+            return donation;
+        }
+
         public async Task<Response> DeleteDonationAsync(string partitionKey, string rowKey)
         {
             return await _donationRepository.DeleteDonationAsync(partitionKey, rowKey);
@@ -30,27 +45,13 @@ namespace DonationAPI.Services
             return await _donationRepository.GetDonationByIdAsync(partitionKey, rowKey);
         }
 
-        public async Task<Donation> StoreDonationAsync(DonationDTO donationDTO)
+        public async Task<Donation> UpdateDonationAsync(UpdateDonationDTO donationDTO)
         {
             Donation donation = new Donation
             {
-                PartitionKey = "Donation",
-                RowKey = Guid.NewGuid().ToString(),
-                Amount = donationDTO.Amount,
-                ArticleId = donationDTO.ArticleId,
-                UserId = donationDTO.UserId
-            };
-
-            await _donationRepository.UpsertDonationAsync(donation);
-            return donation;
-        }
-
-        public async Task<Donation> UpdateDonationAsync(DonationDTO donationDTO)
-        {
-            Donation donation = new Donation
-            {
-                PartitionKey = "Donation",
-                RowKey = Guid.NewGuid().ToString(),
+                PartitionKey = donationDTO.PartitionKey,
+                RowKey = donationDTO.RowKey,
+                Timestamp = donationDTO.Timestamp,
                 ETag = donationDTO.ETag,
                 Amount = donationDTO.Amount,
                 ArticleId = donationDTO.ArticleId,

@@ -41,8 +41,8 @@ namespace DonationAPI.Controllers
             return donation == null ? NotFound($"No donation found for {rowKey}!") : Ok(donation);
         }
 
-        [HttpPost("Create")]
-        public async Task<IActionResult> StoreDonation([FromBody] DonationDTO donationDTO)
+        [HttpPut("Update")]
+        public async Task<IActionResult> UpdateDonation([FromBody] UpdateDonationDTO donationDTO)
         {
             if (donationDTO == null)
             {
@@ -50,6 +50,18 @@ namespace DonationAPI.Controllers
             }
 
             Donation donation = await _service.UpdateDonationAsync(donationDTO);
+
+            return Ok(donation);
+        }
+
+        public async Task<IActionResult> CreateDonation([FromBody] DonationDTO donationDTO)
+        {
+            if (donationDTO == null)
+            {
+                return BadRequest("Request data is empty or invalid!");
+            }
+
+            Donation donation = await _service.CreateDonationAsync(donationDTO);
 
             return CreatedAtAction(nameof(GetDonationByKey), new { partitionKey = donation.PartitionKey, rowKey = donation.RowKey }, donation);
         }
