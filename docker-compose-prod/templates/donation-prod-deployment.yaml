@@ -26,12 +26,12 @@ spec:
     spec:
       containers:
         - env:
-          - name: AZURE_CONNECTION
-            valueFrom:
-              configMapKeyRef:
-                name: content-config
-                key: AZURE_CONNECTION
-        - image: zanzibarinh/donation-prod:latest
+            - name: AZURE_CONNECTION
+              valueFrom:
+                configMapKeyRef:
+                  name: content-config
+                  key: AZURE_CONNECTION
+          image: zanzibarinh/donation-prod:latest
           name: donation-prod
           resources: {}
       restartPolicy: Always
