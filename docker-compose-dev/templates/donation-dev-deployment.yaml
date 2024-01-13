@@ -25,12 +25,12 @@ spec:
         io.kompose.service: donation-dev
     spec:
       containers:
-         - env:
-            - name: AZURE_CONNECTION
-              valueFrom:
-                configMapKeyRef:
-                  name: content-config
-                  key: AZURE_CONNECTION
+        - env:
+          - name: AZURE_CONNECTION
+            valueFrom:
+              configMapKeyRef:
+                name: content-config
+                key: AZURE_CONNECTION
         - image: zanzibarinh/donation-dev:latest
           name: donation-dev
           resources: {}
