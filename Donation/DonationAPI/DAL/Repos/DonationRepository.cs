@@ -11,7 +11,7 @@ namespace DonationAPI.DAL.Repos
         public DonationRepository(IConfiguration config)
         {
             IConfiguration _config = config;
-            TableServiceClient tableServiceClient = new TableServiceClient(Environment.GetEnvironmentVariable("AZURE_CONNECTION") ?? _config["AppStorage"]); ;
+            TableServiceClient tableServiceClient = new TableServiceClient(Environment.GetEnvironmentVariable("AZURE_CONNECTION") ?? _config["AppStorage"]);
             tableServiceClient.CreateTableIfNotExists("donations");
             _client = tableServiceClient.GetTableClient("donations");
         }

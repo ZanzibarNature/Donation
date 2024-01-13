@@ -54,6 +54,7 @@ namespace DonationAPI.Controllers
             return Ok(donation);
         }
 
+        [HttpPost("Create")]
         public async Task<IActionResult> CreateDonation([FromBody] DonationDTO donationDTO)
         {
             if (donationDTO == null)
