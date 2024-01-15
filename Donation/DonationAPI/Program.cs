@@ -3,6 +3,7 @@ using DonationAPI.DAL.Repos.Interfaces;
 using DonationAPI.Domain;
 using DonationAPI.Services;
 using DonationAPI.Services.Interfaces;
+using Prometheus;
 using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +27,13 @@ builder.Services.AddScoped<IDonationService, DonationService>();
 builder.Services.AddScoped<IDonationRepository<Donation>, DonationRepository<Donation>>();
 
 var app = builder.Build();
+
+app.UseMetricServer();
+
+app.UseHttpMetrics(options =>
+{
+    options.AddCustomLabel("host", context => context.Request.Host.Host);
+});
 
 if (!app.Environment.IsDevelopment())
 {

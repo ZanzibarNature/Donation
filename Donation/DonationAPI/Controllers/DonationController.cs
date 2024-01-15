@@ -2,6 +2,7 @@
 using DonationAPI.Controllers.Interfaces;
 using DonationAPI.Domain;
 using DonationAPI.Domain.DTO;
+using DonationAPI.Middleware;
 using DonationAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +18,7 @@ namespace DonationAPI.Controllers
             _service = service;
         }
 
+        [Auth]
         [HttpDelete("Delete/{partitionKey}/{rowKey}")]
         public async Task<IActionResult> DeleteDonation(string partitionKey, string rowKey)
         {
@@ -25,6 +27,7 @@ namespace DonationAPI.Controllers
             return r.IsError ? NotFound("Given key pair not found!") : Ok("Deleting donation succesful!");
         }
 
+        [Auth]
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAllDonations()
         {
@@ -33,6 +36,7 @@ namespace DonationAPI.Controllers
             return donations.Count == 0 ? NotFound("Nothing found!") : Ok(donations);
         }
 
+        [Auth]
         [HttpGet("GetByKey/{partitionKey}/{rowKey}")]
         public async Task<IActionResult> GetDonationByKey(string partitionKey, string rowKey)
         {
@@ -41,6 +45,7 @@ namespace DonationAPI.Controllers
             return donation == null ? NotFound($"No donation found for {rowKey}!") : Ok(donation);
         }
 
+        [Auth]
         [HttpPut("Update")]
         public async Task<IActionResult> UpdateDonation([FromBody] UpdateDonationDTO donationDTO)
         {
@@ -54,6 +59,7 @@ namespace DonationAPI.Controllers
             return Ok(donation);
         }
 
+        [Auth]
         [HttpPost("Create")]
         public async Task<IActionResult> CreateDonation([FromBody] DonationDTO donationDTO)
         {
