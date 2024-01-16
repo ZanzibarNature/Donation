@@ -24,6 +24,9 @@ jobs:
         run: dotnet build --configuration Release --no-restore
         working-directory: ./Donation
 
+      - name: Just what the fuck is going on here
+        run: dotnet test /help
+      
       - name: Run tests
         run: dotnet test --no-build --verbosity normal
         working-directory: ./Donation
