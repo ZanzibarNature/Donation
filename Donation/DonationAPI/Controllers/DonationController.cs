@@ -28,10 +28,10 @@ namespace DonationAPI.Controllers
         }
 
         [Auth]
-        [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAllDonations()
+        [HttpGet("GetPages")]
+        public async Task<IActionResult> GetPagesOfDonationsAsync()
         {
-            IList<Donation> donations = await _service.GetAllDonationsAsync();
+            IList<Donation> donations = await _service.GetPagesOfDonationsAsync();
 
             return donations.Count == 0 ? NotFound("Nothing found!") : Ok(donations);
         }

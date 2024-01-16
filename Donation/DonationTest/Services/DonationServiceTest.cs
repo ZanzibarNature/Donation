@@ -76,7 +76,7 @@ namespace DonationAPI.Tests
             var mockDonation3 = await _mockDonationService.CreateDonationAsync(_mockDonationDTO);
             Assert.NotNull(mockDonation3);
 
-            var mockDonations = await _mockDonationService.GetAllDonationsAsync();
+            var mockDonations = await _mockDonationService.GetPagesOfDonationsAsync();
             Assert.NotNull(mockDonations);
             Assert.IsType<List<Donation>>(mockDonations);
             _mockDonationRepo.VerifyAll();
@@ -94,10 +94,8 @@ namespace DonationAPI.Tests
                 ArticleId = 2 // New article ID for update
             };
 
-            // Act
             var result = await _mockDonationService.UpdateDonationAsync(updateDonationDTO);
 
-            // Assert
             Assert.NotNull(result);
             Assert.IsType<DonationDTO>(result);
             Assert.Equal(updateDonationDTO.Amount, result.Amount);
@@ -110,22 +108,12 @@ namespace DonationAPI.Tests
         [Fact]
         public async Task DeleteDonationAsync_ShouldDeleteDonationAsync()
         {
-            // Assume that the donation exists before deletion
-            //var mockDonation = await _mockDonationService.CreateDonationAsync(new DonationDTO
-            //{
-            //    UserId = 123,
-            //    Amount = 456.78,
-            //    ArticleId = 789
-            //});
-
             // Would be cool if we had an actual object to delete
             var mockDonation = await _mockDonationService.CreateDonationAsync(_mockDonationDTO);
             Assert.NotNull(mockDonation);
 
-            // Act
             var result = await _mockDonationService.DeleteDonationAsync(mockDonation.PartitionKey, mockDonation.RowKey);
 
-            // Assert
             Assert.Null(result);
             _mockDonationRepo.VerifyAll();
         }

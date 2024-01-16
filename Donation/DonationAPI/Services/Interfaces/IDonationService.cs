@@ -8,7 +8,7 @@ namespace DonationAPI.Services.Interfaces
     {
         public Task<Donation> CreateDonationAsync(DonationDTO donationDTO);
         public Task<Donation> GetDonationByKeyAsync(string partitionKey, string rowKey);
-        public Task<IList<Donation>> GetAllDonationsAsync();
+        public Task<IList<Donation>> GetPagesOfDonationsAsync();
         public Task<Donation> UpdateDonationAsync(UpdateDonationDTO donationDTO);
         public Task<Response> DeleteDonationAsync(string partitionKey, string rowKey);
     }

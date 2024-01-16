@@ -35,9 +35,9 @@ namespace DonationAPI.Services
             return await _donationRepository.DeleteDonationAsync(partitionKey, rowKey);
         }
 
-        public async Task<IList<Donation>> GetAllDonationsAsync()
+        public async Task<IList<Donation>> GetPagesOfDonationsAsync()
         {
-            return await _donationRepository.GetAllDonationsAsync();
+            return await _donationRepository.GetPagesOfDonationsAsync();
         }
 
         public async Task<Donation> GetDonationByKeyAsync(string partitionKey, string rowKey)
