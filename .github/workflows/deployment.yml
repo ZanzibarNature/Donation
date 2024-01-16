@@ -23,12 +23,9 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
         working-directory: ./Donation
-
-      - name: Just what the fuck is going on here
-        run: dotnet test /help
       
       - name: Run tests
-        run: dotnet test --no-build --verbosity normal
+        run: dotnet test --no-restore --verbosity normal
         working-directory: ./Donation
   build-main:
     runs-on: ubuntu-latest
