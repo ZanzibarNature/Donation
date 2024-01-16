@@ -26,7 +26,7 @@ jobs:
 
       - name: Run tests
         run: dotnet test --no-build --verbosity normal
-        working-directory: .
+        working-directory: ./Donation
   build-main:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
@@ -50,7 +50,7 @@ jobs:
 
       - name: Run tests
         run: dotnet test --no-build --verbosity normal
-        working-directory: .
+        working-directory: ./Donation
   push-dev-dockerhub:
     runs-on: ubuntu-latest
     needs: build-dev
