@@ -5,6 +5,8 @@ VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DonationAPI", "DonationAPI\DonationAPI.csproj", "{3FFAD778-6A31-41BD-80F9-32289348B2B9}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DonationTest", "DonationTest\DonationTest.csproj", "{F4D1FDDD-D18F-466E-8F39-F87C662DB582}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{3FFAD778-6A31-41BD-80F9-32289348B2B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FFAD778-6A31-41BD-80F9-32289348B2B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FFAD778-6A31-41BD-80F9-32289348B2B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4D1FDDD-D18F-466E-8F39-F87C662DB582}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4D1FDDD-D18F-466E-8F39-F87C662DB582}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4D1FDDD-D18F-466E-8F39-F87C662DB582}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4D1FDDD-D18F-466E-8F39-F87C662DB582}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
