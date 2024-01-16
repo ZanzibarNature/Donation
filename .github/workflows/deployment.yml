@@ -23,6 +23,10 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
         working-directory: ./Donation
+
+      - name: Run tests
+        run: dotnet test --no-build --verbosity normal
+        working-directory: ./Donation
   build-main:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
@@ -42,6 +46,10 @@ jobs:
       
       - name: Build
         run: dotnet build --configuration Release --no-restore
+        working-directory: ./Donation
+
+      - name: Run tests
+        run: dotnet test --no-build --verbosity normal
         working-directory: ./Donation
   push-dev-dockerhub:
     runs-on: ubuntu-latest
