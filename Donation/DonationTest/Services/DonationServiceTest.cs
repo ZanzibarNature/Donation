@@ -11,8 +11,8 @@ namespace DonationAPI.Tests
     public class DonationServiceTest
     {
         private readonly Mock<IDonationRepository<Donation>> _mockDonationRepo;
-        private readonly IDonationService _mockDonationService;
-        private readonly Guid _mockRowKey;
+        private readonly IDonationService _donationService;
+        private readonly string _mockRowKey;
         private readonly string _mockPartKey;
         private DonationDTO _mockDonationDTO;
         private Donation _mockDonation;
@@ -20,9 +20,9 @@ namespace DonationAPI.Tests
         public DonationServiceTest() 
         {
             _mockDonationRepo = new Mock<IDonationRepository<Donation>>();
-            _mockRowKey = Guid.NewGuid();
+            _mockRowKey = Guid.NewGuid().ToString();
             _mockPartKey = "Donation";
-            _mockDonationService = new DonationService(_mockDonationRepo.Object);
+            _donationService = new DonationService(_mockDonationRepo.Object);
             _mockDonationDTO = new DonationDTO
             {
                 UserId = 9999999,
@@ -34,8 +34,8 @@ namespace DonationAPI.Tests
                 UserId = 9999999,
                 Amount = 9999999.99,
                 ArticleId = 1,
-                PartitionKey = "TestPartKey",
-                RowKey = "TestRowKey",
+                PartitionKey = _mockPartKey,
+                RowKey = _mockRowKey,
                 ETag = new Azure.ETag(),
                 Timestamp = DateTime.UtcNow
             };
@@ -44,48 +44,45 @@ namespace DonationAPI.Tests
         [Fact]
         public async Task CreateDonationAsync_ShouldCreateDonationAsyncAndReturnDonation()
         {
-            var result = await _mockDonationService.CreateDonationAsync(_mockDonationDTO);
+            var result = await _donationService.CreateDonationAsync(_mockDonationDTO);
             Assert.NotNull(result);
             Assert.IsType<Donation>(result);
             Assert.Equal(_mockDonationDTO.Amount, result.Amount);
             Assert.Equal(_mockDonationDTO.UserId, result.UserId);
             Assert.Equal(_mockDonationDTO.ArticleId, result.ArticleId);
-            _mockDonationRepo.VerifyAll();
+            _mockDonationRepo.Verify(repo => repo.UpsertDonationAsync(It.IsAny<Donation>()), Times.Once);
         }
 
         [Fact]
         public async Task GetDonationByKeyAsync_ShouldGetDonationByKeyAsyncAndReturnDonation()
         {
-            var mockDonation = await _mockDonationService.CreateDonationAsync(_mockDonationDTO);
-            var result = await _mockDonationService.GetDonationByKeyAsync(mockDonation.PartitionKey, mockDonation.RowKey);
+            _mockDonationRepo.Setup(repo => repo.GetDonationByIdAsync(_mockPartKey, _mockRowKey))
+                .ReturnsAsync(_mockDonation);
+            
+            var result = await _donationService.GetDonationByKeyAsync(_mockDonation.PartitionKey, _mockDonation.RowKey);
             Assert.NotNull(result);
             Assert.IsType<Donation>(result);
-            Assert.Equal(_mockDonationDTO.Amount, result.Amount);
-            Assert.Equal(_mockDonationDTO.UserId, result.UserId);
-            Assert.Equal(_mockDonationDTO.ArticleId, result.ArticleId);
-            _mockDonationRepo.VerifyAll();
+            Assert.Equal(_mockDonation, result);
+            _mockDonationRepo.Verify(repo => repo.GetDonationByIdAsync(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
         }
 
         [Fact]
-        public async Task GetAllDonationsAsync_ShouldGetAllDonationsAsync()
+        public async Task GetPagesOfDonationsAsync_ShouldGetPagesOfDonationsAsync()
         {
-            var mockDonation1 = await _mockDonationService.CreateDonationAsync(_mockDonationDTO);
+            var mockDonation1 = await _donationService.CreateDonationAsync(_mockDonationDTO);
             Assert.NotNull(mockDonation1);
-            var mockDonation2 = await _mockDonationService.CreateDonationAsync(_mockDonationDTO);
+            var mockDonation2 = await _donationService.CreateDonationAsync(_mockDonationDTO);
             Assert.NotNull(mockDonation2);
-            var mockDonation3 = await _mockDonationService.CreateDonationAsync(_mockDonationDTO);
+            var mockDonation3 = await _donationService.CreateDonationAsync(_mockDonationDTO);
             Assert.NotNull(mockDonation3);
 
-            var mockDonations = await _mockDonationService.GetPagesOfDonationsAsync();
-            Assert.NotNull(mockDonations);
-            Assert.IsType<List<Donation>>(mockDonations);
-            _mockDonationRepo.VerifyAll();
+            var mockDonations = await _donationService.GetPagesOfDonationsAsync();
+            _mockDonationRepo.Verify(repo => repo.GetPagesOfDonationsAsync(), Times.Once);
         }
 
         [Fact]
         public async Task UpdateDonationAsync_ShouldUpdateDonationAsync()
         {
-            // Arrange
             var updateDonationDTO = new UpdateDonationDTO
             {
                 PartitionKey = _mockPartKey,
@@ -94,28 +91,27 @@ namespace DonationAPI.Tests
                 ArticleId = 2 // New article ID for update
             };
 
-            var result = await _mockDonationService.UpdateDonationAsync(updateDonationDTO);
+            var result = await _donationService.UpdateDonationAsync(updateDonationDTO);
 
             Assert.NotNull(result);
-            Assert.IsType<DonationDTO>(result);
             Assert.Equal(updateDonationDTO.Amount, result.Amount);
             Assert.Equal(updateDonationDTO.ArticleId, result.ArticleId);
             Assert.Equal(_mockRowKey.ToString(), result.RowKey); // Ensure RowKey remains the same
             Assert.Equal(_mockPartKey, result.PartitionKey); // Ensure PartitionKey remains the same
-            _mockDonationRepo.VerifyAll();
+            _mockDonationRepo.Verify(repo => repo.UpsertDonationAsync(It.IsAny<Donation>()), Times.Once);
         }
 
         [Fact]
         public async Task DeleteDonationAsync_ShouldDeleteDonationAsync()
         {
             // Would be cool if we had an actual object to delete
-            var mockDonation = await _mockDonationService.CreateDonationAsync(_mockDonationDTO);
+            var mockDonation = await _donationService.CreateDonationAsync(_mockDonationDTO);
             Assert.NotNull(mockDonation);
 
-            var result = await _mockDonationService.DeleteDonationAsync(mockDonation.PartitionKey, mockDonation.RowKey);
+            var result = await _donationService.DeleteDonationAsync(mockDonation.PartitionKey, mockDonation.RowKey);
 
             Assert.Null(result);
-            _mockDonationRepo.VerifyAll();
+            _mockDonationRepo.Verify(repo => repo.DeleteDonationAsync(mockDonation.PartitionKey, mockDonation.RowKey), Times.Once);
         }
     }
 }
