@@ -8,7 +8,7 @@ namespace DonationAPI.Controllers.Interfaces
         public Task<IActionResult> CreateDonation([FromBody] DonationDTO donationDTO);
         public Task<IActionResult> UpdateDonation([FromBody] UpdateDonationDTO donationDTO);
         public Task<IActionResult> GetDonationByKey(string partitionKey, string rowKey);
-        public Task<IActionResult> GetAllDonations();
+        public Task<IActionResult> GetPagesOfDonationsAsync();
         public Task<IActionResult> DeleteDonation(string partitionKey, string rowKey);
     }
 }

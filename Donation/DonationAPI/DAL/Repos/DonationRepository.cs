@@ -8,6 +8,11 @@ namespace DonationAPI.DAL.Repos
     {
         private readonly TableClient _client;
 
+        public DonationRepository() 
+        {
+            
+        }
+        
         public DonationRepository(IConfiguration config)
         {
             IConfiguration _config = config;
@@ -21,7 +26,7 @@ namespace DonationAPI.DAL.Repos
             return await _client.DeleteEntityAsync(partitionKey, rowKey);
         }
 
-        public async Task<IList<T>> GetAllDonationsAsync()
+        public async Task<IList<T>> GetPagesOfDonationsAsync()
         {
             IList<T> results = new List<T>();
             var donations = _client.QueryAsync<T>(maxPerPage: 25);

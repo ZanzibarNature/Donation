@@ -23,6 +23,10 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
         working-directory: ./Donation
+      
+      - name: Run tests
+        run: dotnet test --no-restore --verbosity normal
+        working-directory: ./Donation
   build-main:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
@@ -42,6 +46,10 @@ jobs:
       
       - name: Build
         run: dotnet build --configuration Release --no-restore
+        working-directory: ./Donation
+
+      - name: Run tests
+        run: dotnet test --no-build --verbosity normal
         working-directory: ./Donation
   push-dev-dockerhub:
     runs-on: ubuntu-latest
@@ -104,6 +112,33 @@ jobs:
           openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
           namespace: kawa-foundation-app-dev
+
+      - name: Get OpenShift token
+        run: |
+          echo TOKEN=$(oc whoami --show-token) >> $GITHUB_OUTPUT
+        id: get_token_step
+      
+      - name: Get public key from GitHub secrets
+        run: |
+          response=$(curl -L \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/orgs/ZanzibarNature/actions/secrets/public-key)
+          echo KEY_ID=$(echo "$response" | jq -r '.key_id') >> $GITHUB_OUTPUT
+        id: get_key_step
+
+      - name: Update GitHub secret with new OPENSHIFT_TOKEN
+        run: |
+          echo "Updating OPENSHIFT_TOKEN secret"
+          curl -L \
+            -X PUT \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/orgs/ZanzibarNature/actions/secrets/OPENSHIFT_TOKEN \
+            -d '{"encrypted_value":"'"$(echo -n "${{ steps.get_token_step.outputs.TOKEN }}" | base64)"'", "key_id":"'"${{ steps.get_key_step.outputs.KEY_ID }}"'", "visibility":"all"'
+
       
       - name: Set up Helm
         uses: azure/setup-helm@v3
@@ -127,6 +162,32 @@ jobs:
           openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
           namespace: kawa-foundation-app
+          
+      - name: Get OpenShift token
+        run: |
+          echo TOKEN=$(oc whoami --show-token) >> $GITHUB_OUTPUT
+        id: get_token_step
+      
+      - name: Get public key from GitHub secrets
+        run: |
+          response=$(curl -L \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/orgs/ZanzibarNature/actions/secrets/public-key)
+          echo KEY_ID=$(echo "$response" | jq -r '.key_id') >> $GITHUB_OUTPUT
+        id: get_key_step
+
+      - name: Update GitHub secret with new OPENSHIFT_TOKEN
+        run: |
+          echo "Updating OPENSHIFT_TOKEN secret"
+          curl -L \
+            -X PUT \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/orgs/ZanzibarNature/actions/secrets/OPENSHIFT_TOKEN \
+            -d '{"encrypted_value":"'"$(echo -n "${{ steps.get_token_step.outputs.TOKEN }}" | base64)"'", "key_id":"'"${{ steps.get_key_step.outputs.KEY_ID }}"'", "visibility":"all"'
       
       - name: Set up Helm
         uses: azure/setup-helm@v3
