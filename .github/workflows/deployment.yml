@@ -49,7 +49,7 @@ jobs:
         working-directory: ./Donation
 
       - name: Run tests
-        run: dotnet test --no-build --verbosity normal
+        run: dotnet test --no-restore --verbosity normal
         working-directory: ./Donation
   push-dev-dockerhub:
     runs-on: ubuntu-latest
