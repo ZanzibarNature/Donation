@@ -1,4 +1,3 @@
-using DonationAPI.DAL.Repos;
 using DonationAPI.DAL.Repos.Interfaces;
 using DonationAPI.Domain;
 using DonationAPI.Domain.DTO;
@@ -17,7 +16,7 @@ namespace DonationAPI.Tests
         private DonationDTO _mockDonationDTO;
         private Donation _mockDonation;
 
-        public DonationServiceTest() 
+        public DonationServiceTest()
         {
             _mockDonationRepo = new Mock<IDonationRepository<Donation>>();
             _mockRowKey = Guid.NewGuid().ToString();
@@ -40,7 +39,7 @@ namespace DonationAPI.Tests
                 Timestamp = DateTime.UtcNow
             };
         }
-        
+
         [Fact]
         public async Task CreateDonationAsync_ShouldCreateDonationAsyncAndReturnDonation()
         {
@@ -58,7 +57,7 @@ namespace DonationAPI.Tests
         {
             _mockDonationRepo.Setup(repo => repo.GetDonationByIdAsync(_mockPartKey, _mockRowKey))
                 .ReturnsAsync(_mockDonation);
-            
+
             var result = await _donationService.GetDonationByKeyAsync(_mockDonation.PartitionKey, _mockDonation.RowKey);
             Assert.NotNull(result);
             Assert.IsType<Donation>(result);
