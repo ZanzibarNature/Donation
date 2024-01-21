@@ -8,11 +8,11 @@ namespace DonationAPI.DAL.Repos
     {
         private readonly TableClient _client;
 
-        public DonationRepository() 
+        public DonationRepository()
         {
-            
+
         }
-        
+
         public DonationRepository(IConfiguration config)
         {
             IConfiguration _config = config;

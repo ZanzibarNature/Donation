@@ -1,6 +1,4 @@
-﻿using Azure;
-
-namespace DonationAPI.Domain.DTO
+﻿namespace DonationAPI.Domain.DTO
 {
     public class DonationDTO
     {

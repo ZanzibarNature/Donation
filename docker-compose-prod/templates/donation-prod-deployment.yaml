@@ -31,7 +31,7 @@ spec:
                 configMapKeyRef:
                   name: content-config
                   key: AZURE_CONNECTION
-          image: zanzibarinh/donation-prod:latest
+          image: zanzibarinh/donation-prod:{{.Values.version}}
           name: donation-prod
           resources: {}
       restartPolicy: Always
